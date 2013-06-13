@@ -1,0 +1,12 @@
+All specific code of the Lightbox project is covered under the terms of the GNU Affero Public License V3, or a newer version of the same license at your option. This applies to the following files, as well as any derived work:
+
+- src/main.c
+- src/lightbox.h
+- src/lightbox.c
+- all files inside the "test_client" directory
+
+
+This software makes use of the AT91LIB and uIP libraries. These are licenced under their own terms, which can be found inside the source code of each library:
+
+- at91lib/
+- external_libs/ethernet/uip

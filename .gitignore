@@ -1,0 +1,12 @@
+*.*~
+Thumbs.db
+.DS_Store
+__MACOSX
+*.o
+*.elf
+*.bin
+.project
+*.bak
+/bin
+/obj
+\#*\#

@@ -1,0 +1,216 @@
+/**
+ * \addtogroup uipopt
+ * @{
+ */
+
+/**
+ * \name Project-specific configuration options
+ * @{
+ *
+ * uIP has a number of configuration options that can be overridden
+ * for each project. These are kept in a project-specific uip-conf.h
+ * file and all configuration names have the prefix UIP_CONF.
+ */
+
+/*
+ * Copyright (c) 2006, Swedish Institute of Computer Science.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * This file is part of the uIP TCP/IP stack
+ *
+ * $Id: uip-conf.h,v 1.6 2006/06/12 08:00:31 adam Exp $
+ */
+
+/**
+ * \file
+ *         An example uIP configuration file
+ * \author
+ *         Adam Dunkels <adam@sics.se>
+ */
+
+#ifndef __UIP_CONF_H__
+#define __UIP_CONF_H__
+
+
+/**
+ * 8 bit datatype
+ *
+ * This typedef defines the 8-bit type used throughout uIP.
+ *
+ * \hideinitializer
+ */
+typedef unsigned char u8_t;
+
+/**
+ * 16 bit datatype
+ *
+ * This typedef defines the 16-bit type used throughout uIP.
+ *
+ * \hideinitializer
+ */
+typedef unsigned short u16_t;
+
+/**
+ * Statistics datatype
+ *
+ * This typedef defines the dataype used for keeping statistics in
+ * uIP.
+ *
+ * \hideinitializer
+ */
+typedef unsigned short uip_stats_t;
+
+/**
+ * Turn on support for IP packet reassembly.
+ *
+ * uIP supports reassembly of fragmented IP packets. This features
+ * requires an additonal amount of RAM to hold the reassembly buffer
+ * and the reassembly code size is approximately 700 bytes.  The
+ * reassembly buffer is of the same size as the uip_buf buffer
+ * (configured by UIP_BUFSIZE).
+ *
+ * \note IP packet reassembly is not heavily tested.
+ *
+ * \hideinitializer
+ * default: 0
+ */
+#define UIP_REASSEMBLY 0
+
+/**
+ * The maximum time an IP fragment should wait in the reassembly
+ * buffer before it is dropped.
+ * default: 40
+ */
+#define UIP_REASS_MAXAGE 400
+
+/**
+ * Determines if support for opening connections from uIP should be
+ * compiled in.
+ *
+ * If the applications that are running on top of uIP for this project
+ * do not need to open outgoing TCP connections, this configration
+ * option can be turned off to reduce the code size of uIP.
+ *
+ * \hideinitializer
+ */
+#define UIP_ACTIVE_OPEN 0
+
+/**
+ * Maximum number of TCP connections.
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_MAX_CONNECTIONS 1
+
+/**
+ * Maximum number of listening TCP ports.
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_MAX_LISTENPORTS 1
+
+/**
+ * uIP buffer size.
+ *
+ * \hideinitializer
+ */
+// Somehow uIP will go haywire with values above 1995 :S
+#define UIP_CONF_BUFFER_SIZE     1995
+/**
+ * CPU byte order.
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_BYTE_ORDER      LITTLE_ENDIAN
+
+/**
+ * Logging on or off
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_LOGGING         1
+
+/**
+ * UDP support on or off
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_UDP             0
+
+/**
+ * UDP checksums on or off
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_UDP_CHECKSUMS   0
+
+/**
+ * uIP statistics on or off
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_STATISTICS      0
+
+/**
+ * The link level header length.
+ *
+ * \hideinitializer
+ */
+#define UIP_CONF_LLH_LEN         14
+
+/**
+ * Broadcast support.
+ *
+ * \hideinitializer
+ *
+ */
+#define UIP_CONF_BROADCAST       0
+
+/* Here we include the header file for the application(s) we use in
+   our project. */
+
+/* #define UIP_DHCP_on */
+
+#ifdef UIP_DHCP_on
+ #if !UIP_CONF_UDP
+  #undef UIP_CONF_UDP
+  #define UIP_CONF_UDP 1
+ #endif
+ #if !UIP_CONF_BROADCAST
+  #undef UIP_CONF_BROADCAST
+  #define UIP_CONF_BROADCAST 1
+ #endif
+#include "dhcpc.h"
+#endif
+
+#include "lightbox.h"
+
+#endif /* __UIP_CONF_H__ */
+
+/** @} */
+/** @} */
+
